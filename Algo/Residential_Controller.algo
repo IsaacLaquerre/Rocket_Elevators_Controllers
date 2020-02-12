@@ -125,17 +125,17 @@ SEQUENCE moveElevator USING callFloor AND direction AND elevator
 END SEQUENCE
 
 
-SEQUENCE openDoors(elevator)
+SEQUENCE openDoors USING elevator
     SET DOOR_OPEN to true
     SET elevator.doors to open
     DO
         WAIT 7 seconds
     WHILE doorwayBlocked NOT EQUAL false
-    CALL closeDoors(elevator)
+    CALL closeDoors USING elevator
 END SEQUENCE
 
 
-SEQUENCE closeDoors(elevator)
+SEQUENCE closeDoors USING elevator
     SET DOOR_CLOSE to true
     SET elevator.doors to closed
 END SEQUENCE
