@@ -19,25 +19,25 @@ SET elevatorsArray to [
 ]
 
 
-SEQUENCE exteriorButton(direction, callFloor)
-    CALL callElevator(callFloor, direction)
+SEQUENCE exteriorButton USING direction AND callFloor
+    CALL callElevator WITH callFloor AND direction
 END SEQUENCE
 
 
-SEQUENCE interiorButton(elevator, requestFloor)
+SEQUENCE interiorButton USING elevator AND requestFloor
     SET button to the button pressed in the elevator
     SET direction to elevator.direction
-    CALL addFloorToQueue(elevator, requestFloor, direction)
+    CALL addFloorToQueue WITH elevator AND requestFloor AND direction
 END SEQUENCE
 
 
-SEQUENCE callElevator(floor, direction)
-    SET elevator TO CALL findElevator(floor, direction)
-    CALL addFloorToQueue(elevator, floor, direction)
+SEQUENCE callElevator WITH floor AND direction
+    CALL findElevator WITH floor AND direction returning elevator
+    CALL addFloorToQueue WITH elevator AND floor AND direction
 END SEQUENCE
 
 
-SEQUENCE addFloorToQueue(elevator, floor, direction)
+SEQUENCE addFloorToQueue USING elevator AND floor AND direction
     PUSH floor to elevator.queueArray
     CASE elevator.direction
         up:
@@ -46,12 +46,12 @@ SEQUENCE addFloorToQueue(elevator, floor, direction)
             SORT elevator.queueArray descending
     ENDCASE
     IF length of elevator.queueArray IS EQUAL 0
-        CALL moveElevator(floor, direction, elevator)
+        CALL moveElevator WITH floor AND direction AND elevator
     ENDIF
 END SEQUENCE
 
 
-SEQUENCE findElevator(callFloor, direction)
+SEQUENCE findElevator USING callFloor AND direction
     SET elevatorIndex to null
     FOR elevator in elevatorsArray
         IF elevator.floor IS EQUAL callFloor THEN
@@ -60,10 +60,10 @@ SEQUENCE findElevator(callFloor, direction)
         ELSE IF elevator.status IS EQUAL idle THEN
             SET elevatorIndex to elevator
             return value at elevator index of elevatorsArray
-        ELSE IF elevator.direction IS EQUAL up, direction IS EQUAL up, elevator.floor < callFloor THEN
+        ELSE IF elevator.direction IS EQUAL up AND direction IS EQUAL up AND elevator.floor < callFloor THEN
             SET elevatorIndex to elevator
             return value at elevator index of elevatorsArray
-        ELSE IF elevator.direction IS EQUAL down, direction IS EQUAL down, elevator.floor > callFloor THEN
+        ELSE IF elevator.direction IS EQUAL down AND direction IS EQUAL down AND elevator.floor > callFloor THEN
             SET elevatorIndex to elevator
             return value at elevator index of elevatorsArray
         ENDIF
@@ -85,11 +85,11 @@ SEQUENCE findElevator(callFloor, direction)
 END SEQUENCE
 
 
-SEQUENCE moveElevator(callFloor, direction, elevator)
+SEQUENCE moveElevator USING callFloor AND direction AND elevator
     SET groundFloor to 0
     SET downDirection to down
     IF elevator.door IS EQUAL open THEN 
-      CALL closeDoors(elevator)
+      CALL closeDoors WITH elevator
     END IF
     DO
         CASE direction OF
@@ -100,7 +100,7 @@ SEQUENCE moveElevator(callFloor, direction, elevator)
                     SET elevator.direction to up
                     SET elevator.status to moving
                 ENDWHILE
-                CALL openDoors(elevator)
+                CALL openDoors WITH elevator
                 SET elevator.direction to null
                 SET elevator.floor to callFloor
                 REMOVE first element from elevator.queueArray
@@ -111,14 +111,14 @@ SEQUENCE moveElevator(callFloor, direction, elevator)
                     SET elevator.direction to down
                     SET elevator.status to moving
                 ENDWHILE
-                CALL openDoors(elevator)
+                CALL openDoors WITH elevator
                 SET elevator.direction to null
                 SET elevator.floor to callFloor
                 REMOVE first element from elevator.queueArray
         ENDCASE
     WHILE length of elevator.queueArray NOT EQUAL 0
     IF elevator.floor NOT EQUAL 0
-        CALL moveElevator(groundFloor, downDirection, elevator)
+        CALL moveElevator WITH groundFloor AND downDirection AND elevator
         SET elevator.direction to null
         SET elevator.status to idle
     END IF
