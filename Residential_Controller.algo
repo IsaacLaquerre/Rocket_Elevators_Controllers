@@ -1,0 +1,141 @@
+SET elevatorsArray to [
+    SET elevatorObject1 to {
+        SET direction to null,
+        SET floor to 0,
+        SET status to idle,
+        SET queueArray to [empty],
+        SET doors to closed,
+        SET gap to 0
+    },
+    SET elevatorObject2 to {
+        SET direction to null,
+        SET floor to 0,
+        SET status to idle,
+        SET queueArray to [empty],
+        SET doors to closed,
+        SET gap to 0
+    }
+    '... Continue for every floor
+]
+
+
+SEQUENCE exteriorButton(direction, callFloor)
+    CALL callElevator(callFloor, direction)
+END SEQUENCE
+
+
+SEQUENCE interiorButton(elevator, requestFloor)
+    SET button to the button pressed in the elevator
+    SET direction to elevator.direction
+    CALL addFloorToQueue(elevator, requestFloor, direction)
+END SEQUENCE
+
+
+SEQUENCE callElevator(floor, direction)
+    SET elevator TO CALL findElevator(floor, direction)
+    CALL addFloorToQueue(elevator, floor, direction)
+END SEQUENCE
+
+
+SEQUENCE addFloorToQueue(elevator, floor, direction)
+    PUSH floor to elevator.queueArray
+    CASE elevator.direction
+        up:
+            SORT elevator.queueArray ascending
+        down:
+            SORT elevator.queueArray descending
+    ENDCASE
+    IF length of elevator.queueArray IS EQUAL 0
+        CALL moveElevator(floor, direction, elevator)
+    ENDIF
+END SEQUENCE
+
+
+SEQUENCE findElevator(callFloor, direction)
+    SET elevatorIndex to null
+    FOR elevator in elevatorsArray
+        IF elevator.floor IS EQUAL callFloor THEN
+            SET elevatorIndex to elevator
+            return value at elevator index of elevatorsArray
+        ELSE IF elevator.status IS EQUAL idle THEN
+            SET elevatorIndex to elevator
+            return value at elevator index of elevatorsArray
+        ELSE IF elevator.direction IS EQUAL up, direction IS EQUAL up, elevator.floor < callFloor THEN
+            SET elevatorIndex to elevator
+            return value at elevator index of elevatorsArray
+        ELSE IF elevator.direction IS EQUAL down, direction IS EQUAL down, elevator.floor > callFloor THEN
+            SET elevatorIndex to elevator
+            return value at elevator index of elevatorsArray
+        ENDIF
+    ENDFOR
+    IF elevatorIndex IS EQUAL null
+        SET elevatorGaps to [empty]
+        FOR elevator in elevatorsArray
+            SET gap to the absolute value of elevator.floor - callFloor
+            SET elevator.gap to gap
+            PUSH gap to elevatorGaps
+        ENDFOR
+        SORT elevatorGaps ascending
+        FOR elevator in elevatorsArray
+            IF elevator.gap IS EQUAL elevator element of elevatorsArray
+                return value at elevator index of elevatorsArray
+            ENDIF
+        ENDFOR
+    ENDIF
+END SEQUENCE
+
+
+SEQUENCE moveElevator(callFloor, direction, elevator)
+    SET groundFloor to 0
+    SET downDirection to down
+    IF elevator.door IS EQUAL open THEN 
+      CALL closeDoors(elevator)
+    END IF
+    DO
+        CASE direction OF
+            up:
+                WHILE elevator.floor NOT EQUAL callFloor
+                    SET MOVE_UP to true
+                    INCREMENT elevator.floor
+                    SET elevator.direction to up
+                    SET elevator.status to moving
+                ENDWHILE
+                CALL openDoors(elevator)
+                SET elevator.direction to null
+                SET elevator.floor to callFloor
+                REMOVE first element from elevator.queueArray
+            down:
+                WHILE elevator.floor NOT EQUAL callFloor
+                    SET MOVE_DOWN to true
+                    DECREMENT elevator.floor
+                    SET elevator.direction to down
+                    SET elevator.status to moving
+                ENDWHILE
+                CALL openDoors(elevator)
+                SET elevator.direction to null
+                SET elevator.floor to callFloor
+                REMOVE first element from elevator.queueArray
+        ENDCASE
+    WHILE length of elevator.queueArray NOT EQUAL 0
+    IF elevator.floor NOT EQUAL 0
+        CALL moveElevator(groundFloor, downDirection, elevator)
+        SET elevator.direction to null
+        SET elevator.status to idle
+    END IF
+END SEQUENCE
+
+
+SEQUENCE openDoors(elevator)
+    SET DOOR_OPEN to true
+    SET elevator.doors to open
+    DO
+        WAIT 7 seconds
+    WHILE doorwayBlocked NOT EQUAL false
+    CALL closeDoors(elevator)
+END SEQUENCE
+
+
+SEQUENCE closeDoors(elevator)
+    SET DOOR_CLOSE to true
+    SET elevator.doors to closed
+END SEQUENCE
