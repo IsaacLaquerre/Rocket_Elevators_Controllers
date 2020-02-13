@@ -1,0 +1,43 @@
+Change the following to the amount of floors and collumns your building has
+SET buildingInfoObject to {
+    floors: 60,
+    basements: 6,
+    collumns: {
+        amount: 4,
+        elevatorsPerCollumn: 3
+    }
+}
+
+'Set all elevators to idle and place them at the ground floor
+SEQUENCE startElevatorsystem
+    SET battery.status to ready
+        FOR EACH column in battery.columns
+            FOR EACH elevator in column.elevators
+                SET elevator.status to idle
+                SET elevator.floor TO groundFloor
+                SET elevator.door to closed
+            END FOR
+        END FOR
+END SEQUENCE
+
+'Get the user's desired floor
+SEQUENCE exteriorButton USING callFloor AND destinationFloor
+    CALL callElevator WITH callFloor AND destinationFloor
+    CALL addFloorToQueue WITH destinationFloor
+END SEQUENCE
+
+'Go to ground floor when the button is pressed in an elevator
+SEQUENCE interiorButton USING elevator
+    SET groundFloor to 0
+    CALL moveElevator WITH goundFloor
+END SEQUENCE
+
+'Decide which collumn is appropriate for the user's floor
+SEQUENCE decideCollumn USING destinationFloor AND buildingInfoObject
+    SET floorsPerCollumn to round((buildingInfoObject.floors + buildingInfoObject.basements) / buildingInfoObject.collumns.amount)
+    FOR index in buildingInfoObject.collumns.amount
+        IF destinationFloor > ((floorsPerCollumn * index) - floorsPerCollumn) AND destinationFloor < ((floorsPerCollumn * index) + 1) THEN
+            return index
+        ENDIF
+    ENDFOR
+END SEQUENCE
