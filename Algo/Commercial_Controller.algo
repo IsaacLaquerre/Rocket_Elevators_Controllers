@@ -1,4 +1,4 @@
-Change the following to the amount of floors and collumns your building has
+'Change the following to the amount of floors and collumns your building has
 SET buildingInfoObject to {
     floors: 60,
     basements: 6,
