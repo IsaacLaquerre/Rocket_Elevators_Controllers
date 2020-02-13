@@ -1,42 +1,31 @@
-SET elevatorsArray to [
-    SET elevatorObject1 to {
-        SET direction to null,
-        SET floor to 0,
-        SET status to idle,
-        SET queueArray to [empty],
-        SET doors to closed,
-        SET gap to 0
-    },
-    SET elevatorObject2 to {
-        SET direction to null,
-        SET floor to 0,
-        SET status to idle,
-        SET queueArray to [empty],
-        SET doors to closed,
-        SET gap to 0
-    }
-    '... Continue for every floor
-]
+'Set all elevators to idle and place them at the ground floor
+SEQUENCE startElevatorsystem
+    FOR EACH elevator in elevatorsList
+        SET elevator.status to idle
+        SET elevator.floor TO groundFloor
+        SET elevator.door to closed
+    END FOR
+END SEQUENCE
 
-
+'Get the user's desired direction
 SEQUENCE exteriorButton USING direction AND callFloor
     CALL callElevator WITH callFloor AND direction
 END SEQUENCE
 
-
+'Get the user's desired floor
 SEQUENCE interiorButton USING elevator AND requestFloor
-    SET button to the button pressed in the elevator
+    SET button to button pressed in elevator
     SET direction to elevator.direction
     CALL addFloorToQueue WITH elevator AND requestFloor AND direction
 END SEQUENCE
 
-
+'Call elevator to the floor that it was called from
 SEQUENCE callElevator WITH floor AND direction
     CALL findElevator WITH floor AND direction returning elevator
     CALL addFloorToQueue WITH elevator AND floor AND direction
 END SEQUENCE
 
-
+'When calling or using the elevator, add the floor to the elevator's floor queue
 SEQUENCE addFloorToQueue USING elevator AND floor AND direction
     PUSH floor to elevator.queueArray
     CASE elevator.direction
@@ -50,7 +39,7 @@ SEQUENCE addFloorToQueue USING elevator AND floor AND direction
     ENDIF
 END SEQUENCE
 
-
+'Find which elevator is the best depending on the user's position
 SEQUENCE findElevator USING callFloor AND direction
     SET elevatorIndex to null
     FOR elevator in elevatorsArray
@@ -84,8 +73,8 @@ SEQUENCE findElevator USING callFloor AND direction
     ENDIF
 END SEQUENCE
 
-
-SEQUENCE moveElevator USING callFloor AND direction AND elevator
+'Move chosen elevator to the desired floor
+SEQUENCE moveElevator USING floor AND direction AND elevator
     SET groundFloor to 0
     SET downDirection to down
     IF elevator.door IS EQUAL open THEN 
@@ -94,7 +83,7 @@ SEQUENCE moveElevator USING callFloor AND direction AND elevator
     DO
         CASE direction OF
             up:
-                WHILE elevator.floor NOT EQUAL callFloor
+                WHILE elevator.floor NOT EQUAL floor
                     SET MOVE_UP to true
                     INCREMENT elevator.floor
                     SET elevator.direction to up
@@ -102,10 +91,10 @@ SEQUENCE moveElevator USING callFloor AND direction AND elevator
                 ENDWHILE
                 CALL openDoors WITH elevator
                 SET elevator.direction to null
-                SET elevator.floor to callFloor
+                SET elevator.floor to floor
                 REMOVE first element from elevator.queueArray
             down:
-                WHILE elevator.floor NOT EQUAL callFloor
+                WHILE elevator.floor NOT EQUAL floor
                     SET MOVE_DOWN to true
                     DECREMENT elevator.floor
                     SET elevator.direction to down
@@ -113,7 +102,7 @@ SEQUENCE moveElevator USING callFloor AND direction AND elevator
                 ENDWHILE
                 CALL openDoors WITH elevator
                 SET elevator.direction to null
-                SET elevator.floor to callFloor
+                SET elevator.floor to floor
                 REMOVE first element from elevator.queueArray
         ENDCASE
     WHILE length of elevator.queueArray NOT EQUAL 0
@@ -124,7 +113,7 @@ SEQUENCE moveElevator USING callFloor AND direction AND elevator
     END IF
 END SEQUENCE
 
-
+'Open the elevator's doors
 SEQUENCE openDoors USING elevator
     SET DOOR_OPEN to true
     SET elevator.doors to open
@@ -134,7 +123,7 @@ SEQUENCE openDoors USING elevator
     CALL closeDoors USING elevator
 END SEQUENCE
 
-
+'Close the elevator's doors
 SEQUENCE closeDoors USING elevator
     SET DOOR_CLOSE to true
     SET elevator.doors to closed
