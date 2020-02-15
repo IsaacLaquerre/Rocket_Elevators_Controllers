@@ -126,5 +126,5 @@ END SEQUENCE
 'Close the elevator's doors
 SEQUENCE closeDoors USING elevator
     SET DOOR_CLOSE to true
-    SET elevator.doors to closed
+    SET elevator.doors to closed 
 END SEQUENCE

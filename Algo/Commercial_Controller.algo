@@ -21,23 +21,113 @@ SEQUENCE startElevatorsystem
 END SEQUENCE
 
 'Get the user's desired floor
-SEQUENCE exteriorButton USING callFloor AND destinationFloor
+SEQUENCE exteriorButton USING elevator AND callFloor AND destinationFloor
     CALL callElevator WITH callFloor AND destinationFloor
-    CALL addFloorToQueue WITH destinationFloor
+    CALL decideCollumn WITH destinationFloor AND buildingInfoObject returning collumnIndex
+    PRINT collumnIndex
 END SEQUENCE
 
-'Go to ground floor when the button is pressed in an elevator
-SEQUENCE interiorButton USING elevator
-    SET groundFloor to 0
-    CALL moveElevator WITH goundFloor
+'Call elevator to the floor that it was called from
+SEQUENCE callElevator WITH floor AND direction
+    CALL findElevator WITH floor AND direction returning elevator
+    CALL addFloorToQueue WITH elevator AND floor AND direction
 END SEQUENCE
 
 'Decide which collumn is appropriate for the user's floor
 SEQUENCE decideCollumn USING destinationFloor AND buildingInfoObject
-    SET floorsPerCollumn to round((buildingInfoObject.floors + buildingInfoObject.basements) / buildingInfoObject.collumns.amount)
+    SET floorsPerCollumn to round result of ((buildingInfoObject.floors + buildingInfoObject.basements) / buildingInfoObject.collumns.amount)
     FOR index in buildingInfoObject.collumns.amount
         IF destinationFloor > ((floorsPerCollumn * index) - floorsPerCollumn) AND destinationFloor < ((floorsPerCollumn * index) + 1) THEN
             return index
         ENDIF
     ENDFOR
+END SEQUENCE
+
+'Go to ground floor when the button is pressed in an elevator
+SEQUENCE interiorButton USING elevator
+    SET groundFloor to 0
+    IF elevator.floor > 0 THEN
+        CALL moveElevator WITH goundFloor AND down AND elevator
+    ELSE IF elevator.floor < 0 THEN
+        CALL moveElevator WITH groundFloor AND up AND elevator
+    ENDIF
+END SEQUENCE
+
+'Move chosen elevator to the desired floor
+SEQUENCE moveElevator USING floor AND direction AND elevator
+    SET groundFloor to 0
+    SET downDirection to down
+    IF elevator.door IS EQUAL open THEN 
+      CALL closeDoors WITH elevator
+    END IF
+    DO
+        CASE direction OF
+            up:
+                WHILE elevator.floor NOT EQUAL floor
+                    SET MOVE_UP to true
+                    INCREMENT elevator.floor
+                    SET elevator.direction to up
+                    SET elevator.status to moving
+                ENDWHILE
+                CALL openDoors WITH elevator
+                SET elevator.direction to null
+                SET elevator.floor to floor
+                REMOVE first element from elevator.queueArray
+            down:
+                WHILE elevator.floor NOT EQUAL floor
+                    SET MOVE_DOWN to true
+                    DECREMENT elevator.floor
+                    SET elevator.direction to down
+                    SET elevator.status to moving
+                ENDWHILE
+                CALL openDoors WITH elevator
+                SET elevator.direction to null
+                SET elevator.floor to floor
+                REMOVE first element from elevator.queueArray
+        ENDCASE
+    WHILE length of elevator.queueArray NOT EQUAL 0
+    IF elevator.floor NOT EQUAL 0
+        CALL moveElevator WITH groundFloor AND downDirection AND elevator
+        SET elevator.direction to null
+        SET elevator.status to idle
+    END IF
+END SEQUENCE
+
+'When calling or using the elevator, add the floor to the elevator's floor queue
+SEQUENCE addFloorToQueue USING elevator AND callFloor AND goToFloor
+    PUSH floor to elevator.queueArray
+    IF length of elevator.queueArray IS EQUAL 0
+        CALL moveElevator WITH floor AND direction AND elevator
+    ENDIF
+END SEQUENCE
+
+'Find which elevator is the best depending on the user's position
+SEQUENCE findElevator USING callFloor AND direction
+    FOR elevator in elevatorsArray
+        IF elevator.floor IS EQUAL callFloor THEN
+            return elevator
+        ELSE IF elevator.status IS EQUAL idle THEN
+            return elevator
+        ELSE IF elevator.direction IS EQUAL up AND direction IS EQUAL up AND elevator.floor < callFloor THEN
+            return elevator
+        ELSE IF elevator.direction IS EQUAL down AND direction IS EQUAL down AND elevator.floor > callFloor THEN
+            return elevator
+        ENDIF
+    ENDFOR
+END SEQUENCE
+
+'Open the elevator's doors
+SEQUENCE openDoors USING elevator
+    SET DOOR_OPEN to true
+    SET elevator.doors to open
+    DO
+        SLEEP 7 seconds
+    WHILE doorwayBlocked NOT EQUAL false
+    CALL closeDoors USING elevator
+END SEQUENCE
+
+'Close the elevator's doors
+SEQUENCE closeDoors USING elevator
+    SET DOOR_CLOSE to true
+    SET elevator.doors to closed
 END SEQUENCE
