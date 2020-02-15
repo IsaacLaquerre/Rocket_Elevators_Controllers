@@ -21,7 +21,7 @@ SEQUENCE startElevatorsystem
 END SEQUENCE
 
 'Get the user's desired floor
-SEQUENCE exteriorButton USING elevator AND callFloor AND destinationFloor
+SEQUENCE exteriorButton USING callFloor AND destinationFloor
     CALL callElevator WITH callFloor AND destinationFloor
     CALL decideCollumn WITH destinationFloor AND buildingInfoObject returning collumnIndex
     PRINT collumnIndex
@@ -45,7 +45,6 @@ END SEQUENCE
 
 'Go to ground floor when the button is pressed in an elevator
 SEQUENCE interiorButton USING elevator
-    SET groundFloor to 0
     IF elevator.floor > 0 THEN
         CALL moveElevator WITH goundFloor AND down AND elevator
     ELSE IF elevator.floor < 0 THEN
@@ -55,12 +54,10 @@ END SEQUENCE
 
 'Move chosen elevator to the desired floor
 SEQUENCE moveElevator USING floor AND direction AND elevator
-    SET groundFloor to 0
     SET downDirection to down
     IF elevator.door IS EQUAL open THEN 
       CALL closeDoors WITH elevator
     END IF
-    DO
         CASE direction OF
             up:
                 WHILE elevator.floor NOT EQUAL floor
@@ -85,7 +82,6 @@ SEQUENCE moveElevator USING floor AND direction AND elevator
                 SET elevator.floor to floor
                 REMOVE first element from elevator.queueArray
         ENDCASE
-    WHILE length of elevator.queueArray NOT EQUAL 0
     IF elevator.floor NOT EQUAL 0
         CALL moveElevator WITH groundFloor AND downDirection AND elevator
         SET elevator.direction to null

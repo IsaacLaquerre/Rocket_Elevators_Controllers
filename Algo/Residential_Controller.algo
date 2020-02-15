@@ -1,6 +1,6 @@
 'Set all elevators to idle and place them at the ground floor
 SEQUENCE startElevatorsystem
-    FOR EACH elevator in elevatorsList
+    FOR EACH elevator in elevatorsArray
         SET elevator.status to idle
         SET elevator.floor TO groundFloor
         SET elevator.door to closed
@@ -45,7 +45,7 @@ SEQUENCE findElevator USING callFloor AND direction
     FOR elevator in elevatorsArray
         IF elevator.floor IS EQUAL callFloor THEN
             SET elevatorIndex to elevator
-            return value at elevator index of elevatorsArray
+            return value at elevator index of elevatorsArray 'elevators[elevator];
         ELSE IF elevator.status IS EQUAL idle THEN
             SET elevatorIndex to elevator
             return value at elevator index of elevatorsArray
@@ -66,7 +66,7 @@ SEQUENCE findElevator USING callFloor AND direction
         ENDFOR
         SORT elevatorGaps ascending
         FOR elevator in elevatorsArray
-            IF elevator.gap IS EQUAL elevator element of elevatorsArray
+            IF elevator.gap IS EQUAL elevator element of elevatorGaps 'elevatorGaps[elevator];
                 return value at elevator index of elevatorsArray
             ENDIF
         ENDFOR
@@ -75,7 +75,6 @@ END SEQUENCE
 
 'Move chosen elevator to the desired floor
 SEQUENCE moveElevator USING floor AND direction AND elevator
-    SET groundFloor to 0
     SET downDirection to down
     IF elevator.door IS EQUAL open THEN 
       CALL closeDoors WITH elevator
@@ -105,7 +104,6 @@ SEQUENCE moveElevator USING floor AND direction AND elevator
                 SET elevator.floor to floor
                 REMOVE first element from elevator.queueArray
         ENDCASE
-    WHILE length of elevator.queueArray NOT EQUAL 0
     IF elevator.floor NOT EQUAL 0
         CALL moveElevator WITH groundFloor AND downDirection AND elevator
         SET elevator.direction to null
@@ -118,7 +116,7 @@ SEQUENCE openDoors USING elevator
     SET DOOR_OPEN to true
     SET elevator.doors to open
     DO
-        WAIT 7 seconds
+        SLEEP 7 seconds
     WHILE doorwayBlocked NOT EQUAL false
     CALL closeDoors USING elevator
 END SEQUENCE
