@@ -97,7 +97,7 @@ class Elevator {
             let firstElement = this.queue[0];
             
 			if (this.door == "open") {
-				console.log("Waiting 7 seconds for the doorway to be cleared")
+				console.log("Waiting 7 seconds for the doorway to be cleared");
 				this.closeDoors();
             }
 			if (firstElement == this.currentFloor) {
@@ -116,6 +116,8 @@ class Elevator {
 			}
 		}
 		if (this.queue.length === 0) {
+			console.log("Waiting 7 seconds for the doorway to be cleared");
+			this.closeDoors();
 			console.log("Elevator is now idle");
 			this.status = "idle";
 		}
@@ -184,14 +186,9 @@ function  Test2_requestFloor(){
 	column2 = new Column(10, 2);
 
 	column2.elevatorList[0].currentFloor = 2;
-	column2.elevatorList[0].direction  =  "up";  
+	column2.elevatorList[0].direction  =  "down";  
 	column2.elevatorList[0].status =  "moving";
-	column2.elevatorList[0].queue = [3,4];
-
-	column2.elevatorList[1].currentFloor = 2;
-	column2.elevatorList[1].direction  =  null;
-	column2.elevatorList[1].status =  "idle";
-	column2.elevatorList[1].queue = [];
+	column2.elevatorList[0].queue = [3,10,5,7,1];
 
 	elevator = column2.elevatorList[0];
 
