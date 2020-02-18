@@ -3,9 +3,9 @@ class Column {
         this.floors = floors;
         this.elevators = elevators;
         this.externalButtonList = [];
-        this.elevatorList = [];
+        this.elevatorsList = [];
         for (let i = 0; i < elevators; i++) {
-            this.elevatorList.push(new Elevator(1, floors));
+            this.elevatorsList.push(new Elevator(1, floors));
         }
 		for (let i = 0; i < this.floors; i++) {
             if (i === 0) {
@@ -21,25 +21,25 @@ class Column {
 
 		let bestGap = this.floors;
 
-		for (let i = 0; i < this.elevatorList.length; i++) {
-			if (this.elevatorList[i].status == "idle") {
-                console.log("Best elevator found on floor " + this.elevatorList[i].currentFloor + ", going " + this.elevatorList[i].direction);
-				return this.elevatorList[i];
-			}else if (this.elevatorList[i].direction === "up" && direction === "up" && requestedFloor > this.elevatorList[i].currentFloor) {
-                console.log("Best elevator found on floor " + this.elevatorList[i].currentFloor + ", going " + this.elevatorList[i].direction);
-				return this.elevatorList[i];
-			}else if (this.elevatorList[i].direction === "down" && direction === "down" && requestedFloor < this.elevatorList[i].currentFloor) {
-                console.log("Best elevator found on floor " + this.elevatorList[i].currentFloor + ", going " + this.elevatorList[i].direction);
-				return this.elevatorList[i];
+		for (let i = 0; i < this.elevatorsList.length; i++) {
+			if (this.elevatorsList[i].status == "idle") {
+                console.log("Best elevator found on floor " + this.elevatorsList[i].currentFloor + ", going " + this.elevatorsList[i].direction);
+				return this.elevatorsList[i];
+			}else if (this.elevatorsList[i].direction === "up" && direction === "up" && requestedFloor > this.elevatorsList[i].currentFloor) {
+                console.log("Best elevator found on floor " + this.elevatorsList[i].currentFloor + ", going " + this.elevatorsList[i].direction);
+				return this.elevatorsList[i];
+			}else if (this.elevatorsList[i].direction === "down" && direction === "down" && requestedFloor < this.elevatorsList[i].currentFloor) {
+                console.log("Best elevator found on floor " + this.elevatorsList[i].currentFloor + ", going " + this.elevatorsList[i].direction);
+				return this.elevatorsList[i];
 			}else {
-				for (let i = 0; i < this.elevatorList.length; i++) {
-                    let gap = Math.abs(this.elevatorList[i].currentFloor - requestedFloor);
+				for (let i = 0; i < this.elevatorsList.length; i++) {
+                    let gap = Math.abs(this.elevatorsList[i].currentFloor - requestedFloor);
                     if (gap < bestGap) {
-                        var chosenElevator = this.elevatorList[i];
+                        var chosenElevator = this.elevatorsList[i];
                         bestGap = gap;
                     }
                 }
-                console.log("Best elevator found on floor " + this.elevatorList[i].currentFloor + " with a gap of " + bestGap + ", going " + this.elevatorList[i].direction);
+                console.log("Best elevator found on floor " + this.elevatorsList[i].currentFloor + " with a gap of " + bestGap + ", going " + this.elevatorsList[i].direction);
 				return chosenElevator;
 			}
 		}
@@ -165,15 +165,15 @@ function Test1_requestElevator() {
 	
 	column1 = new Column(10, 2);
 
-	column1.elevatorList[0].currentFloor = 2
-    column1.elevatorList[0].direction = "up"
-    column1.elevatorList[0].status = "moving"
-	column1.elevatorList[0].queue = [4, 6, 7]
+	column1.elevatorsList[0].currentFloor = 2
+    column1.elevatorsList[0].direction = "up"
+    column1.elevatorsList[0].status = "moving"
+	column1.elevatorsList[0].queue = [4, 6, 7]
 
-	column1.elevatorList[1].currentFloor = 6
-	column1.elevatorList[1].direction = "down"
-	column1.elevatorList[1].status = "moving"
-	column1.elevatorList[1].queue = [4, 3]
+	column1.elevatorsList[1].currentFloor = 6
+	column1.elevatorsList[1].direction = "down"
+	column1.elevatorsList[1].status = "moving"
+	column1.elevatorsList[1].queue = [4, 3]
 
 	column1.requestElevator(1, "down");
 }
@@ -185,12 +185,12 @@ function Test1_requestElevator() {
 function  Test2_requestFloor(){
 	column2 = new Column(10, 2);
 
-	column2.elevatorList[0].currentFloor = 2;
-	column2.elevatorList[0].direction  =  "down";  
-	column2.elevatorList[0].status =  "moving";
-	column2.elevatorList[0].queue = [3,10,5,7,1];
+	column2.elevatorsList[0].currentFloor = 2;
+	column2.elevatorsList[0].direction  =  "down";  
+	column2.elevatorsList[0].status =  "moving";
+	column2.elevatorsList[0].queue = [3,10,5,7,1];
 
-	elevator = column2.elevatorList[0];
+	elevator = column2.elevatorsList[0];
 
 	column2.requestFloor(elevator, 9);
 }
