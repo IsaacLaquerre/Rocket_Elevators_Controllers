@@ -2,17 +2,19 @@ class Battery {
     constructor(columns, floors, basements, elevatorsPerColumn) {
         this.columns = columns;
         this.floors = floors + basements;
+        this.basements = basements;
         this.elevatorsPerColumn = elevatorsPerColumn
         this.columnsList = [];
         for (let i = 0; i != this.columns; i++) {
             this.columnsList.push(new Column(this.floors, elevatorsPerColumn));
         }
     }
+
     decideColumn(requestedFloor) {
         let floorsPerColumn = Math.round(this.floors / this.columns);
         for (let index = 0; index < this.columnsList.length; index++) {
             for (let i = 0; i < this.columnsList[index].elevatorsList.length; i++) {
-                if (requestedFloor > ((floorsPerColumn * index) - floorsPerColumn) && requestedFloor < ((floorsPerColumn * index) + 1)) {
+                if (requestedFloor > ((floorsPerColumn * index) - floorsPerColumn) && requestedFloor < ((floorsPerColumn * index) + floorsPerColumn)) {
                     console.log("Chosen column #" + (index + 1));
                     return (index + 1);
                 }
@@ -20,42 +22,56 @@ class Battery {
         }
     }
 
-    findElevator(requestedFloor, direction) {
+    findElevator(requestedFloor, direction, column) {
+        
+        column--;
 
-		let bestGap = this.floors;
-        for (let index = 0; index < this.columnsList.length; index++) {
-            for (let i = 0; i < this.columnsList[index].elevatorsList.length; i++) {
-                if (this.columnsList[index].elevatorsList[i].status == "idle") {
-                    console.log("Best elevator found on floor " + this.columnsList[index].elevatorsList[i].currentFloor + ", going " + this.columnsList[index].elevatorsList[i].direction);
-                    return this.columnsList[index].elevatorsList[i];
-                }else if (this.columnsList[index].elevatorsList[i].direction === "up" && direction === "up" && requestedFloor > this.columnsList[index].elevatorsList[i].currentFloor) {
-                    console.log("Best elevator found on floor " + this.columnsList[index].elevatorsList[i].currentFloor + ", going " + this.columnsList[index].elevatorsList[i].direction);
-                    return this.columnsList[index].elevatorsList[i];
-                }else if (this.columnsList[index].elevatorsList[i].direction === "down" && direction === "down" && requestedFloor < this.columnsList[index].elevatorsList[i].currentFloor) {
-                    console.log("Best elevator found on floor " + this.columnsList[index].elevatorsList[i].currentFloor + ", going " + this.columnsList[index].elevatorsList[i].direction);
-                    return this.columnsList[index].elevatorsList[i];
-                }else {
-                    for (let i = 0; i < this.columnsList[index].elevatorsList.length; i++) {
-                        let gap = Math.abs(this.columnsList[index].elevatorsList[i].currentFloor - requestedFloor);
-                        if (gap < bestGap) {
-                            var chosenElevator = this.columnsList[index].elevatorsList[i];
-                            bestGap = gap;
-                        }
+        let chosenElevator = null;
+
+        for (let i = 0; i < this.columnsList[column].elevatorsList.length; i++) {
+            if (this.columnsList[column].elevatorsList[i].direction === "up" && direction === "up" && requestedFloor > this.columnsList[column].elevatorsList[i].currentFloor) {
+                var bestGap = this.floors;
+                for (let i = 0; i < this.columnsList[column].elevatorsList.length; i++) {
+                    if (this.columnsList[column].elevatorsList[i].direction != "up") continue;
+                    let gap = Math.abs(this.columnsList[column].elevatorsList[i].currentFloor - requestedFloor);
+                    if (gap < bestGap) {
+                    chosenElevator = this.columnsList[column].elevatorsList[i];
+                        bestGap = gap;
                     }
-                    console.log("Best elevator found on floor " + this.columnsList[index].elevatorsList[i].currentFloor + " with a gap of " + bestGap + ", going " + this.columnsList[index].elevatorsList[i].direction);
-                    return chosenElevator;
+                }
+            }else if (this.columnsList[column].elevatorsList[i].direction === "down" && direction === "down" && requestedFloor < this.columnsList[column].elevatorsList[i].currentFloor) {
+                bestGap = this.floors;
+                for (let i = 0; i < this.columnsList[column].elevatorsList.length; i++) {
+                    if (this.columnsList[column].elevatorsList[i].direction != "down") continue;
+                    let gap = Math.abs(this.columnsList[column].elevatorsList[i].currentFloor - requestedFloor);
+                    if (gap < bestGap) {
+                    chosenElevator = this.columnsList[column].elevatorsList[i];
+                        bestGap = gap;
+                    }
+                }
+            }else if (this.columnsList[column].elevatorsList[i].status === "idle") {
+                chosenElevator = this.columnsList[column].elevatorsList[i];
+            }else {
+                bestGap = this.floors;
+                let gap = Math.abs(this.columnsList[column].elevatorsList[i].currentFloor - requestedFloor);
+                if (gap < bestGap) {
+                    chosenElevator = this.columnsList[column].elevatorsList[i];
+                    bestGap = gap;
                 }
             }
+            console.log("Best elevator found on floor " + this.columnsList[column].elevatorsList[i].currentFloor);
+            return chosenElevator;
         }
     }
     
 	requestElevator(requestedFloor, direction) {
+        if (requestedFloor < -Math.abs(this.basements) || requestedFloor > (this.floors - this.basements)) return console.log("Floor " + requestedFloor + " doesn't exist!");
 
         let column = this.decideColumn(requestedFloor);
 
 		console.log("Called an elevator to the floor " + requestedFloor + " in the collumn #" + column);
 		
-		let elevator = this.findElevator(requestedFloor, direction);
+		let elevator = this.findElevator(requestedFloor, direction, column);
 
 		elevator.addToQueue(requestedFloor);
         elevator.move();
@@ -190,54 +206,69 @@ class InternalButton {
 
 function Test1_requestElevator() {
 	
-	var battery1 = new Battery(3, 3, 3, 4);
+	var battery1 = new Battery(3, 100, 10, 4);
 
 	battery1.columnsList[0].elevatorsList[0].currentFloor = 2
     battery1.columnsList[0].elevatorsList[0].direction = "up"
     battery1.columnsList[0].elevatorsList[0].status = "moving"
-	battery1.columnsList[0].elevatorsList[0].queue = [-3,4,6,7]
+	battery1.columnsList[0].elevatorsList[0].queue = [1,2]
 
-	battery1.columnsList[0].elevatorsList[1].currentFloor = 2
+	battery1.columnsList[0].elevatorsList[1].currentFloor = 3
     battery1.columnsList[0].elevatorsList[1].direction = "down"
     battery1.columnsList[0].elevatorsList[1].status = "moving"
 	battery1.columnsList[0].elevatorsList[1].queue = [3,7,8]
 
-	battery1.columnsList[0].elevatorsList[2].currentFloor = 2
+	battery1.columnsList[0].elevatorsList[2].currentFloor = 38
     battery1.columnsList[0].elevatorsList[2].direction = "up"
     battery1.columnsList[0].elevatorsList[2].status = "moving"
-	battery1.columnsList[0].elevatorsList[2].queue = [-1,5,8]
+    battery1.columnsList[0].elevatorsList[2].queue = [-1,5,8]
+    
+	battery1.columnsList[0].elevatorsList[3].currentFloor = 38
+    battery1.columnsList[0].elevatorsList[3].direction = "up"
+    battery1.columnsList[0].elevatorsList[3].status = "moving"
+	battery1.columnsList[0].elevatorsList[3].queue = [-1,5,8]
 
-	battery1.columnsList[1].elevatorsList[0].currentFloor = 2
+	battery1.columnsList[1].elevatorsList[0].currentFloor = 5
     battery1.columnsList[1].elevatorsList[0].direction = null
     battery1.columnsList[1].elevatorsList[0].status = "idle"
 	battery1.columnsList[1].elevatorsList[0].queue = []
 
-	battery1.columnsList[1].elevatorsList[1].currentFloor = 2
+	battery1.columnsList[1].elevatorsList[1].currentFloor = 6
     battery1.columnsList[1].elevatorsList[1].direction = "up"
     battery1.columnsList[1].elevatorsList[1].status = "moving"
 	battery1.columnsList[1].elevatorsList[1].queue = [1,2,3,4]
 
-	battery1.columnsList[1].elevatorsList[2].currentFloor = 2
+	battery1.columnsList[1].elevatorsList[2].currentFloor = 7
     battery1.columnsList[1].elevatorsList[2].direction = "down"
     battery1.columnsList[1].elevatorsList[2].status = "moving"
-	battery1.columnsList[1].elevatorsList[2].queue = [-3,2,7,8]
+    battery1.columnsList[1].elevatorsList[2].queue = [-3,2,7,8]
+    
+	battery1.columnsList[1].elevatorsList[3].currentFloor = 7
+    battery1.columnsList[1].elevatorsList[3].direction = "down"
+    battery1.columnsList[1].elevatorsList[3].status = "moving"
+	battery1.columnsList[1].elevatorsList[3].queue = [-3,2,7,8]
 
-	battery1.columnsList[2].elevatorsList[0].currentFloor = 2
+	battery1.columnsList[2].elevatorsList[0].currentFloor = 6
     battery1.columnsList[2].elevatorsList[0].direction = "down"
     battery1.columnsList[2].elevatorsList[0].status = "moving"
 	battery1.columnsList[2].elevatorsList[0].queue = [1,4]
 
-	battery1.columnsList[2].elevatorsList[1].currentFloor = 2
+	battery1.columnsList[2].elevatorsList[1].currentFloor = 9
     battery1.columnsList[2].elevatorsList[1].direction = null
     battery1.columnsList[2].elevatorsList[1].status = "idle"
 	battery1.columnsList[2].elevatorsList[1].queue = []
 
-	battery1.columnsList[2].elevatorsList[2].currentFloor = 2
+	battery1.columnsList[2].elevatorsList[2].currentFloor = 38
     battery1.columnsList[2].elevatorsList[2].direction = "up"
     battery1.columnsList[2].elevatorsList[2].status = "moving"
 	battery1.columnsList[2].elevatorsList[2].queue = [4, 6, 7]
 
-	battery1.requestElevator(1, "down");
+	battery1.columnsList[1].elevatorsList[3].currentFloor = 7
+    battery1.columnsList[1].elevatorsList[3].direction = "down"
+    battery1.columnsList[1].elevatorsList[3].status = "moving"
+	battery1.columnsList[1].elevatorsList[3].queue = [-3,2,7,8]
+
+	battery1.requestElevator(99, "down");
 }
 
 //Test1_requestElevator();
