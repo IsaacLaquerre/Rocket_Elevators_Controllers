@@ -208,65 +208,65 @@ function Test1_requestElevator() {
 	
 	var battery1 = new Battery(3, 100, 10, 4);
 
-	battery1.columnsList[0].elevatorsList[0].currentFloor = 2
-    battery1.columnsList[0].elevatorsList[0].direction = "up"
-    battery1.columnsList[0].elevatorsList[0].status = "moving"
-	battery1.columnsList[0].elevatorsList[0].queue = [1,2]
+	battery1.columnsList[0].elevatorsList[0].currentFloor = 2;
+    battery1.columnsList[0].elevatorsList[0].direction = "up";
+    battery1.columnsList[0].elevatorsList[0].status = "moving";
+	battery1.columnsList[0].elevatorsList[0].queue = [1,2];
 
-	battery1.columnsList[0].elevatorsList[1].currentFloor = 3
-    battery1.columnsList[0].elevatorsList[1].direction = "down"
-    battery1.columnsList[0].elevatorsList[1].status = "moving"
-	battery1.columnsList[0].elevatorsList[1].queue = [3,7,8]
+	battery1.columnsList[0].elevatorsList[1].currentFloor = 3;
+    battery1.columnsList[0].elevatorsList[1].direction = "down";
+    battery1.columnsList[0].elevatorsList[1].status = "moving";
+	battery1.columnsList[0].elevatorsList[1].queue = [3,7,8];
 
-	battery1.columnsList[0].elevatorsList[2].currentFloor = 38
-    battery1.columnsList[0].elevatorsList[2].direction = "up"
-    battery1.columnsList[0].elevatorsList[2].status = "moving"
-    battery1.columnsList[0].elevatorsList[2].queue = [-1,5,8]
+	battery1.columnsList[0].elevatorsList[2].currentFloor = 38;
+    battery1.columnsList[0].elevatorsList[2].direction = "up";
+    battery1.columnsList[0].elevatorsList[2].status = "moving";
+    battery1.columnsList[0].elevatorsList[2].queue = [-1,5,8];
     
-	battery1.columnsList[0].elevatorsList[3].currentFloor = 38
-    battery1.columnsList[0].elevatorsList[3].direction = "up"
-    battery1.columnsList[0].elevatorsList[3].status = "moving"
-	battery1.columnsList[0].elevatorsList[3].queue = [-1,5,8]
+	battery1.columnsList[0].elevatorsList[3].currentFloor = 38;
+    battery1.columnsList[0].elevatorsList[3].direction = "up";
+    battery1.columnsList[0].elevatorsList[3].status = "moving";
+	battery1.columnsList[0].elevatorsList[3].queue = [-1,5,8];
 
-	battery1.columnsList[1].elevatorsList[0].currentFloor = 5
-    battery1.columnsList[1].elevatorsList[0].direction = null
-    battery1.columnsList[1].elevatorsList[0].status = "idle"
-	battery1.columnsList[1].elevatorsList[0].queue = []
+	battery1.columnsList[1].elevatorsList[0].currentFloor = 5;
+    battery1.columnsList[1].elevatorsList[0].direction = null;
+    battery1.columnsList[1].elevatorsList[0].status = "idle";
+	battery1.columnsList[1].elevatorsList[0].queue = [];
 
-	battery1.columnsList[1].elevatorsList[1].currentFloor = 6
-    battery1.columnsList[1].elevatorsList[1].direction = "up"
-    battery1.columnsList[1].elevatorsList[1].status = "moving"
-	battery1.columnsList[1].elevatorsList[1].queue = [1,2,3,4]
+	battery1.columnsList[1].elevatorsList[1].currentFloor = 6;
+    battery1.columnsList[1].elevatorsList[1].direction = "up";
+    battery1.columnsList[1].elevatorsList[1].status = "moving";
+	battery1.columnsList[1].elevatorsList[1].queue = [1,2,3,4];
 
-	battery1.columnsList[1].elevatorsList[2].currentFloor = 7
-    battery1.columnsList[1].elevatorsList[2].direction = "down"
-    battery1.columnsList[1].elevatorsList[2].status = "moving"
-    battery1.columnsList[1].elevatorsList[2].queue = [-3,2,7,8]
+	battery1.columnsList[1].elevatorsList[2].currentFloor = 7;
+    battery1.columnsList[1].elevatorsList[2].direction = "down";
+    battery1.columnsList[1].elevatorsList[2].status = "moving";
+    battery1.columnsList[1].elevatorsList[2].queue = [-3,2,7,8];
     
-	battery1.columnsList[1].elevatorsList[3].currentFloor = 7
-    battery1.columnsList[1].elevatorsList[3].direction = "down"
-    battery1.columnsList[1].elevatorsList[3].status = "moving"
-	battery1.columnsList[1].elevatorsList[3].queue = [-3,2,7,8]
+	battery1.columnsList[1].elevatorsList[3].currentFloor = 7;
+    battery1.columnsList[1].elevatorsList[3].direction = "down";
+    battery1.columnsList[1].elevatorsList[3].status = "moving";
+	battery1.columnsList[1].elevatorsList[3].queue = [-3,2,7,8];
 
-	battery1.columnsList[2].elevatorsList[0].currentFloor = 6
-    battery1.columnsList[2].elevatorsList[0].direction = "down"
-    battery1.columnsList[2].elevatorsList[0].status = "moving"
-	battery1.columnsList[2].elevatorsList[0].queue = [1,4]
+	battery1.columnsList[2].elevatorsList[0].currentFloor = 6;
+    battery1.columnsList[2].elevatorsList[0].direction = "down";
+    battery1.columnsList[2].elevatorsList[0].status = "moving";
+	battery1.columnsList[2].elevatorsList[0].queue = [1,4];
 
-	battery1.columnsList[2].elevatorsList[1].currentFloor = 9
-    battery1.columnsList[2].elevatorsList[1].direction = null
-    battery1.columnsList[2].elevatorsList[1].status = "idle"
-	battery1.columnsList[2].elevatorsList[1].queue = []
+	battery1.columnsList[2].elevatorsList[1].currentFloor = 9;
+    battery1.columnsList[2].elevatorsList[1].direction = null;
+    battery1.columnsList[2].elevatorsList[1].status = "idle";
+	battery1.columnsList[2].elevatorsList[1].queue = [];
 
-	battery1.columnsList[2].elevatorsList[2].currentFloor = 38
-    battery1.columnsList[2].elevatorsList[2].direction = "up"
-    battery1.columnsList[2].elevatorsList[2].status = "moving"
-	battery1.columnsList[2].elevatorsList[2].queue = [4, 6, 7]
+	battery1.columnsList[2].elevatorsList[2].currentFloor = 38;
+    battery1.columnsList[2].elevatorsList[2].direction = "up";
+    battery1.columnsList[2].elevatorsList[2].status = "moving";
+	battery1.columnsList[2].elevatorsList[2].queue = [4, 6, 7];
 
-	battery1.columnsList[1].elevatorsList[3].currentFloor = 7
-    battery1.columnsList[1].elevatorsList[3].direction = "down"
-    battery1.columnsList[1].elevatorsList[3].status = "moving"
-	battery1.columnsList[1].elevatorsList[3].queue = [-3,2,7,8]
+	battery1.columnsList[1].elevatorsList[3].currentFloor = 7;
+    battery1.columnsList[1].elevatorsList[3].direction = "down";
+    battery1.columnsList[1].elevatorsList[3].status = "moving";
+	battery1.columnsList[1].elevatorsList[3].queue = [-3,2,7,8];
 
 	battery1.requestElevator(99, "down");
 }
@@ -278,50 +278,50 @@ function Test1_requestElevator() {
 function  Test2_requestFloor(){
 	var battery2 = new Battery(3, 3, 3, 4);
 
-	battery2.columnsList[0].elevatorsList[0].currentFloor = 2
-    battery2.columnsList[0].elevatorsList[0].direction = "up"
-    battery2.columnsList[0].elevatorsList[0].status = "moving"
-	battery2.columnsList[0].elevatorsList[0].queue = [-3,4,6,7]
+	battery2.columnsList[0].elevatorsList[0].currentFloor = 2;
+    battery2.columnsList[0].elevatorsList[0].direction = "up";
+    battery2.columnsList[0].elevatorsList[0].status = "moving";
+	battery2.columnsList[0].elevatorsList[0].queue = [-3,4,6,7];
 
-	battery2.columnsList[0].elevatorsList[1].currentFloor = 2
-    battery2.columnsList[0].elevatorsList[1].direction = "down"
-    battery2.columnsList[0].elevatorsList[1].status = "moving"
-	battery2.columnsList[0].elevatorsList[1].queue = [3,7,8]
+	battery2.columnsList[0].elevatorsList[1].currentFloor = 2;
+    battery2.columnsList[0].elevatorsList[1].direction = "down";
+    battery2.columnsList[0].elevatorsList[1].status = "moving";
+	battery2.columnsList[0].elevatorsList[1].queue = [3,7,8];
 
-	battery2.columnsList[0].elevatorsList[2].currentFloor = 2
-    battery2.columnsList[0].elevatorsList[2].direction = "up"
-    battery2.columnsList[0].elevatorsList[2].status = "moving"
-	battery2.columnsList[0].elevatorsList[2].queue = [-1,5,8]
+	battery2.columnsList[0].elevatorsList[2].currentFloor = 2;
+    battery2.columnsList[0].elevatorsList[2].direction = "up";
+    battery2.columnsList[0].elevatorsList[2].status = "moving";
+	battery2.columnsList[0].elevatorsList[2].queue = [-1,5,8];
 
-	battery2.columnsList[1].elevatorsList[0].currentFloor = 2
-    battery2.columnsList[1].elevatorsList[0].direction = null
-    battery2.columnsList[1].elevatorsList[0].status = "idle"
-	battery2.columnsList[1].elevatorsList[0].queue = []
+	battery2.columnsList[1].elevatorsList[0].currentFloor = 2;
+    battery2.columnsList[1].elevatorsList[0].direction = null;
+    battery2.columnsList[1].elevatorsList[0].status = "idle";
+	battery2.columnsList[1].elevatorsList[0].queue = [];
 
-	battery2.columnsList[1].elevatorsList[1].currentFloor = 2
-    battery2.columnsList[1].elevatorsList[1].direction = "up"
-    battery2.columnsList[1].elevatorsList[1].status = "moving"
-	battery2.columnsList[1].elevatorsList[1].queue = [1,2,3,4]
+	battery2.columnsList[1].elevatorsList[1].currentFloor = 2;
+    battery2.columnsList[1].elevatorsList[1].direction = "up";
+    battery2.columnsList[1].elevatorsList[1].status = "moving";
+	battery2.columnsList[1].elevatorsList[1].queue = [1,2,3,4];
 
-	battery2.columnsList[1].elevatorsList[2].currentFloor = 2
-    battery2.columnsList[1].elevatorsList[2].direction = "down"
-    battery2.columnsList[1].elevatorsList[2].status = "moving"
-	battery2.columnsList[1].elevatorsList[2].queue = [-3,2,7,8]
+	battery2.columnsList[1].elevatorsList[2].currentFloor = 2;
+    battery2.columnsList[1].elevatorsList[2].direction = "down";
+    battery2.columnsList[1].elevatorsList[2].status = "moving";
+	battery2.columnsList[1].elevatorsList[2].queue = [-3,2,7,8];
 
-	battery2.columnsList[2].elevatorsList[0].currentFloor = 2
-    battery2.columnsList[2].elevatorsList[0].direction = "down"
-    battery2.columnsList[2].elevatorsList[0].status = "moving"
-	battery2.columnsList[2].elevatorsList[0].queue = [1,4]
+	battery2.columnsList[2].elevatorsList[0].currentFloor = 2;
+    battery2.columnsList[2].elevatorsList[0].direction = "down";
+    battery2.columnsList[2].elevatorsList[0].status = "moving";
+	battery2.columnsList[2].elevatorsList[0].queue = [1,4];
 
-	battery2.columnsList[2].elevatorsList[1].currentFloor = 2
-    battery2.columnsList[2].elevatorsList[1].direction = null
-    battery2.columnsList[2].elevatorsList[1].status = "idle"
-	battery2.columnsList[2].elevatorsList[1].queue = []
+	battery2.columnsList[2].elevatorsList[1].currentFloor = 2;
+    battery2.columnsList[2].elevatorsList[1].direction = null;
+    battery2.columnsList[2].elevatorsList[1].status = "idle";
+	battery2.columnsList[2].elevatorsList[1].queue = [];
 
-	battery2.columnsList[2].elevatorsList[2].currentFloor = 2
-    battery2.columnsList[2].elevatorsList[2].direction = "up"
-    battery2.columnsList[2].elevatorsList[2].status = "moving"
-	battery2.columnsList[2].elevatorsList[2].queue = [4, 6, 7]
+	battery2.columnsList[2].elevatorsList[2].currentFloor = 2;
+    battery2.columnsList[2].elevatorsList[2].direction = "up";
+    battery2.columnsList[2].elevatorsList[2].status = "moving";
+	battery2.columnsList[2].elevatorsList[2].queue = [4, 6, 7];
 
     elevator = battery2.columnsList[1].elevatorsList[2];
     
