@@ -19,30 +19,28 @@ class Column {
 
     findElevator(requestedFloor, direction) {
 
-		let bestGap = this.floors;
+		var bestGap = this.floors;
+		var chosenElevator = null;
 
 		for (let i = 0; i < this.elevatorsList.length; i++) {
 			if (this.elevatorsList[i].status == "idle") {
-                console.log("Best elevator found on floor " + this.elevatorsList[i].currentFloor + ", going " + this.elevatorsList[i].direction);
-				return this.elevatorsList[i];
+                chosenElevator = this.elevatorsList[i];
 			}else if (this.elevatorsList[i].direction === "up" && direction === "up" && requestedFloor > this.elevatorsList[i].currentFloor) {
-                console.log("Best elevator found on floor " + this.elevatorsList[i].currentFloor + ", going " + this.elevatorsList[i].direction);
-				return this.elevatorsList[i];
+                chosenElevator = this.elevatorsList[i];
 			}else if (this.elevatorsList[i].direction === "down" && direction === "down" && requestedFloor < this.elevatorsList[i].currentFloor) {
-                console.log("Best elevator found on floor " + this.elevatorsList[i].currentFloor + ", going " + this.elevatorsList[i].direction);
-				return this.elevatorsList[i];
+                chosenElevator = this.elevatorsList[i];
 			}else {
 				for (let i = 0; i < this.elevatorsList.length; i++) {
                     let gap = Math.abs(this.elevatorsList[i].currentFloor - requestedFloor);
                     if (gap < bestGap) {
-                        var chosenElevator = this.elevatorsList[i];
+                        chosenElevator = this.elevatorsList[i];
                         bestGap = gap;
                     }
                 }
-                console.log("Best elevator found on floor " + this.elevatorsList[i].currentFloor + " with a gap of " + bestGap + ", going " + this.elevatorsList[i].direction);
-				return chosenElevator;
 			}
 		}
+		console.log("Best elevator found on floor " + chosenElevator.currentFloor);
+		return chosenElevator;
 	}
 	requestElevator(requestedFloor, direction) {
 
@@ -159,7 +157,7 @@ class InternalButton {
 	}
 }
 
-//console.log("--------------------------------------- TEST #1 ------------------------------------------------------\n\n")
+console.log("--------------------------------------- TEST #1 ------------------------------------------------------\n\n")
 
 function Test1_requestElevator() {
 	
@@ -178,7 +176,7 @@ function Test1_requestElevator() {
 	column1.requestElevator(1, "down");
 }
 
-//Test1_requestElevator();
+Test1_requestElevator();
 
 //console.log("\n\n--------------------------------------- TEST #2 ------------------------------------------------------\n\n")
 
