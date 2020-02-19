@@ -19,8 +19,8 @@ class Column {
 
     findElevator(requestedFloor, direction) {
 
-		var bestGap = this.floors;
 		var chosenElevator = null;
+		var bestGap = this.floors;
 
 		for (let i = 0; i < this.elevatorsList.length; i++) {
 			if (this.elevatorsList[i].direction === "up" && direction === "up" && requestedFloor > this.elevatorsList[i].currentFloor) {
@@ -43,6 +43,7 @@ class Column {
 		return chosenElevator;
 	}
 	requestElevator(requestedFloor, direction) {
+		if (requestedFloor > this.floors) return console.log("Floor " + requestedFloor + " doesn't exist!");
 
 		console.log("Called an elevator to the floor " + requestedFloor);
 

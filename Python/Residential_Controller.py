@@ -1,5 +1,4 @@
 class Column():
-    
     def __init__(self, floors, elevators):
         self.floors = floors
         self.elevators = elevators
@@ -99,11 +98,11 @@ class Elevator():
         self.status = "idle"
 
     def moveUp(self):
-        self.currentFloor = self.currentFloor + 1
+        self.currentFloor += 1
         print("^^^ Elevator on floor " + str(self.currentFloor))
 
     def moveDown(self):
-        self.currentFloor = self.currentFloor - 1
+        self.currentFloor -= 1
         print("vvv Elevator on floor " + str(self.currentFloor))
 
     def openDoors(self):
@@ -126,33 +125,34 @@ class InternalButton():
 #print("--------------------------------------- TEST #1 -------------------------------------------------------------\n\n")
 
 def Test1_requestElevator():
-	column1 = Column(10, 2)
+    column1 = Column(10, 2)
 
-	column1.elevatorsList[0].currentFloor = 1
-	column1.elevatorsList[0].direction  =  "up"
-	column1.elevatorsList[0].status =  "moving"
-	column1.elevatorsList[0].queue = [3,5]
+    column1.elevatorsList[0].currentFloor = 1
+    column1.elevatorsList[0].direction  =  "up"
+    column1.elevatorsList[0].status =  "moving"
+    column1.elevatorsList[0].queue = [3,5]
 
-	column1.elevatorsList[1].currentFloor = 6
-	column1.elevatorsList[1].direction  =  "down"
-	column1.elevatorsList[1].status =  "moving"
-	column1.elevatorsList[1].queue = [6,2]
+    column1.elevatorsList[1].currentFloor = 6
+    column1.elevatorsList[1].direction  =  "down"
+    column1.elevatorsList[1].status =  "moving"
+    column1.elevatorsList[1].queue = [6,2]
 
-	column1.requestElevator(7, "up")
+    column1.requestElevator(7, "up")
 
 #Test1_requestElevator()
 
 #print("\n\n--------------------------------------- TEST #2 -------------------------------------------------------------\n\n")
 
 def Test2_requestFloor():
-	column2 = Column(10, 2)
+    column2 = Column(10, 2)
 
-	column2.elevatorsList[0].currentFloor = 2
-	column2.elevatorsList[0].direction  =  "up"
-	column2.elevatorsList[0].status =  "moving"
-	column2.elevatorsList[0].queue = [3,4]
+    column2.elevatorsList[0].currentFloor = 2
+    column2.elevatorsList[0].direction  =  "up"
+    column2.elevatorsList[0].status =  "moving"
+    column2.elevatorsList[0].queue = [3,4]
 
-	elevator = column2.elevatorsList[0]
+    elevator = column2.elevatorsList[0]
 
-	column2.requestFloor(elevator, 9)
+    column2.requestFloor(elevator, 9)
+
 #Test2_requestFloor()
