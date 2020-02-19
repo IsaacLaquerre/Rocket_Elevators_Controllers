@@ -22,7 +22,7 @@ function Test1_requestElevator() {
 	column1.elevatorsList[1].status = "idle";
 	column1.elevatorsList[1].queue = [];
 
-  //Call the function within the Collumn class "requestElevator(requestedFloor, direction)"
+  //Call the function within the Column class "requestElevator(requestedFloor, direction)"
 	column1.requestElevator(4, "up");
 }
 
@@ -45,7 +45,7 @@ def Test1_requestElevator():
     column1.elevatorsList[1].status =  "moving"
     column1.elevatorsList[1].queue = [2,1]
 
-  #Call the function within the Collumn class "requestElevator(requestedFloor, direction)"
+  #Call the function within the Column class "requestElevator(requestedFloor, direction)"
     column1.requestElevator(4, "down")
  
  Test1_requestElevator()
