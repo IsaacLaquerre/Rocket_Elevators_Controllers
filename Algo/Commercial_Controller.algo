@@ -8,18 +8,6 @@ SET buildingInfoObject to {
     }
 }
 
-'Set all elevators to idle and place them at the ground floor
-SEQUENCE startElevatorsystem
-    SET battery.status to ready
-        FOR EACH column in battery.columns
-            FOR EACH elevator in column.elevators
-                SET elevator.status to idle
-                SET elevator.floor TO groundFloor
-                SET elevator.door to closed
-            END FOR
-        END FOR
-END SEQUENCE
-
 'Get the user's desired floor
 SEQUENCE exteriorButton USING callFloor AND destinationFloor
     CALL callElevator WITH callFloor AND destinationFloor
