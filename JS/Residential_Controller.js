@@ -165,8 +165,8 @@ function Test1_requestElevator() {
 	column1 = new Column(10, 2);
 
 	column1.elevatorsList[0].currentFloor = 2
-    column1.elevatorsList[0].direction = "up"
-    column1.elevatorsList[0].status = "moving"
+    	column1.elevatorsList[0].direction = "up"
+    	column1.elevatorsList[0].status = "moving"
 	column1.elevatorsList[0].queue = [4, 6, 7]
 
 	column1.elevatorsList[1].currentFloor = 6
