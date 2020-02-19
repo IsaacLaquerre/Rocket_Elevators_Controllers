@@ -1,12 +1,3 @@
-'Set all elevators to idle and place them at the ground floor
-SEQUENCE startElevatorsystem
-    FOR EACH elevator in elevatorsArray
-        SET elevator.status to idle
-        SET elevator.floor TO groundFloor
-        SET elevator.door to closed
-    END FOR
-END SEQUENCE
-
 'Get the user's desired direction
 SEQUENCE exteriorButton USING direction AND callFloor
     CALL callElevator WITH callFloor AND direction
