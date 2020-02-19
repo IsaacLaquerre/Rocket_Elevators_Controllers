@@ -113,12 +113,10 @@ class Elevator {
 				this.moveDown()
 			}
 		}
-		if (this.queue.length === 0) {
-			console.log("Waiting 7 seconds for the doorway to be cleared");
-			this.closeDoors();
-			console.log("Elevator is now idle");
-			this.status = "idle";
-		}
+		console.log("Waiting 7 seconds for the doorway to be cleared");
+		this.closeDoors();
+		console.log("Elevator is now idle");
+		this.status = "idle";
 	}
 	moveUp() {
 		this.currentFloor++;

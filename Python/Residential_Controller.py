@@ -1,5 +1,5 @@
 class Column():
-
+    
     def __init__(self, floors, elevators):
         self.floors = floors
         self.elevators = elevators
@@ -44,8 +44,8 @@ class Column():
         elevator.move()
         return elevator
 
-    def requestFloor(elevator, requestedFloor):
-        print("Moving elevator on floor " + elevator.currentFloor + " to the floor " + requestedFloor)
+    def requestFloor(self, elevator, requestedFloor):
+        print("Moving elevator on floor " + str(elevator.currentFloor) + " to the floor " + str(requestedFloor))
         elevator.addToQueue(requestedFloor)
         elevator.closeDoors()
         elevator.move()
@@ -82,30 +82,29 @@ class Elevator():
             if self.door == "open":
                 print("Waiting 7 seconds for the doorway to be cleared")
                 self.closeDoors()
-                if firstElement == self.currentFloor:
-                    self.queue.pop(0)
-                    self.openDoors()
-                elif firstElement > self.currentFloor:
-                    self.status = "moving"
-                    self.direction = "up"
-                    self.moveUp()
-                elif firstElement < self.currentFloor:
-                    self.status = "moving"
-                    self.direction = "down"
-                    self.moveDown()
-        if len(self.queue) == 0:
-            print("Waiting 7 seconds for the doorway to be cleared")
-            self.closeDoors()
-            print("Elevator is now idle")
-            self.status = "idle"
+            if firstElement == self.currentFloor:
+                del self.queue[0]
+                self.openDoors()
+            elif firstElement > self.currentFloor:
+                self.status = "moving"
+                self.direction = "up"
+                self.moveUp()
+            elif firstElement < self.currentFloor:
+                self.status = "moving"
+                self.direction = "down"
+                self.moveDown()
+        print("Waiting 7 seconds for the doorway to be cleared")
+        self.closeDoors()
+        print("Elevator is now idle")
+        self.status = "idle"
 
     def moveUp(self):
         self.currentFloor = self.currentFloor + 1
-        print("^^^ Elevator on floor " + self.currentFloor)
+        print("^^^ Elevator on floor " + str(self.currentFloor))
 
     def moveDown(self):
         self.currentFloor = self.currentFloor - 1
-        print("vvv Elevator on floor " + self.currentFloor)
+        print("vvv Elevator on floor " + str(self.currentFloor))
 
     def openDoors(self):
         self.door = "open"
@@ -124,7 +123,7 @@ class InternalButton():
     def __init__(self, floor):
         self.floor = floor
 
-print("--------------------------------------- TEST #1 -------------------------------------------------------------\n\n")
+#print("--------------------------------------- TEST #1 -------------------------------------------------------------\n\n")
 
 def Test1_requestElevator():
 	column1 = Column(10, 2)
@@ -141,9 +140,9 @@ def Test1_requestElevator():
 
 	column1.requestElevator(7, "up")
 
-Test1_requestElevator()
+#Test1_requestElevator()
 
-print("\n\n--------------------------------------- TEST #2 -------------------------------------------------------------\n\n")
+#print("\n\n--------------------------------------- TEST #2 -------------------------------------------------------------\n\n")
 
 def Test2_requestFloor():
 	column2 = Column(10, 2)
@@ -156,4 +155,4 @@ def Test2_requestFloor():
 	elevator = column2.elevatorsList[0]
 
 	column2.requestFloor(elevator, 9)
-Test2_requestFloor()
+#Test2_requestFloor()
