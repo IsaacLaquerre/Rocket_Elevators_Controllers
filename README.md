@@ -1,6 +1,6 @@
-Rocket_Elevators_Controllers | Author
+Rocket_Elevators_Controllers - CodeBoxx Odyssey project
 ---------------------------------------
-CodeBoxx Odyssey project | Isaac Laquerre
+Isaac Laquerre
 -----------------------------------------
 
 # JavaScript
