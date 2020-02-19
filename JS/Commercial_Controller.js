@@ -23,7 +23,7 @@ class Battery {
     }
 
     findElevator(requestedFloor, direction, column) {
-        
+
         column--;
 
         let chosenElevator = null;
@@ -63,14 +63,14 @@ class Battery {
             return chosenElevator;
         }
     }
-    
+
 	requestElevator(requestedFloor, direction) {
         if (requestedFloor < -Math.abs(this.basements) || requestedFloor > (this.floors - this.basements)) return console.log("Floor " + requestedFloor + " doesn't exist!");
 
         let column = this.decideColumn(requestedFloor);
 
 		console.log("Called an elevator to the floor " + requestedFloor + " in the collumn #" + column);
-		
+
 		let elevator = this.findElevator(requestedFloor, direction, column);
 
 		elevator.addToQueue(requestedFloor);
