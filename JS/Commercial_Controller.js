@@ -198,6 +198,11 @@ class InternalButton {
 		this.floor = 0;
 	}
 }
+
+
+/* -------------------------- TESTING SECTION -------------------------- */
+
+
 //console.log("--------------------------------------- TEST #1 ------------------------------------------------------\n\n")
 
 function Test1_requestElevator() {

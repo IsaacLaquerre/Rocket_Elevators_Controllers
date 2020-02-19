@@ -157,6 +157,10 @@ class InternalButton():
     def __init__(self):
         self.floor = 0
 
+
+### -------------------------- TESTING SECTION -------------------------- ###
+
+
 #print("--------------------------------------- TEST #1 ------------------------------------------------------\n\n")
 
 def Test1_requestElevator():
