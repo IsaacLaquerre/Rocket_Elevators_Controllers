@@ -36,16 +36,16 @@ SEQUENCE findElevator USING callFloor AND direction
     FOR elevator in elevatorsArray
         IF elevator.floor IS EQUAL callFloor THEN
             SET elevatorIndex to elevator
-            return value at elevator index of elevatorsArray 'elevators[elevator];
+            return elevator
         ELSE IF elevator.status IS EQUAL idle THEN
             SET elevatorIndex to elevator
-            return value at elevator index of elevatorsArray
+            return elevator
         ELSE IF elevator.direction IS EQUAL up AND direction IS EQUAL up AND elevator.floor < callFloor THEN
             SET elevatorIndex to elevator
-            return value at elevator index of elevatorsArray
+            return elevator
         ELSE IF elevator.direction IS EQUAL down AND direction IS EQUAL down AND elevator.floor > callFloor THEN
             SET elevatorIndex to elevator
-            return value at elevator index of elevatorsArray
+            return elevator
         ENDIF
     ENDFOR
     IF elevatorIndex IS EQUAL null
