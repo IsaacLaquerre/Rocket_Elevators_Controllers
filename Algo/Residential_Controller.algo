@@ -1,12 +1,3 @@
-'Set all elevators to idle and place them at the ground floor
-SEQUENCE startElevatorsystem
-    FOR EACH elevator in elevatorsArray
-        SET elevator.status to idle
-        SET elevator.floor TO groundFloor
-        SET elevator.door to closed
-    END FOR
-END SEQUENCE
-
 'Get the user's desired direction
 SEQUENCE exteriorButton USING direction AND callFloor
     CALL callElevator WITH callFloor AND direction
@@ -45,16 +36,16 @@ SEQUENCE findElevator USING callFloor AND direction
     FOR elevator in elevatorsArray
         IF elevator.floor IS EQUAL callFloor THEN
             SET elevatorIndex to elevator
-            return value at elevator index of elevatorsArray 'elevators[elevator];
+            return elevator
         ELSE IF elevator.status IS EQUAL idle THEN
             SET elevatorIndex to elevator
-            return value at elevator index of elevatorsArray
+            return elevator
         ELSE IF elevator.direction IS EQUAL up AND direction IS EQUAL up AND elevator.floor < callFloor THEN
             SET elevatorIndex to elevator
-            return value at elevator index of elevatorsArray
+            return elevator
         ELSE IF elevator.direction IS EQUAL down AND direction IS EQUAL down AND elevator.floor > callFloor THEN
             SET elevatorIndex to elevator
-            return value at elevator index of elevatorsArray
+            return elevator
         ENDIF
     ENDFOR
     IF elevatorIndex IS EQUAL null
