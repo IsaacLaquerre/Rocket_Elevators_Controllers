@@ -5,7 +5,7 @@ class Column {
         this.externalButtonList = [];
         this.elevatorsList = [];
         for (let i = 0; i < elevators; i++) {
-            this.elevatorsList.push(new Elevator(1, floors));
+            this.elevatorsList.push(new Elevator(0, floors));
         }
 		for (let i = 0; i < this.floors; i++) {
             if (i === 0) {
@@ -23,12 +23,12 @@ class Column {
 		var chosenElevator = null;
 
 		for (let i = 0; i < this.elevatorsList.length; i++) {
-			if (this.elevatorsList[i].status == "idle") {
-                chosenElevator = this.elevatorsList[i];
-			}else if (this.elevatorsList[i].direction === "up" && direction === "up" && requestedFloor > this.elevatorsList[i].currentFloor) {
+			if (this.elevatorsList[i].direction === "up" && direction === "up" && requestedFloor > this.elevatorsList[i].currentFloor) {
                 chosenElevator = this.elevatorsList[i];
 			}else if (this.elevatorsList[i].direction === "down" && direction === "down" && requestedFloor < this.elevatorsList[i].currentFloor) {
                 chosenElevator = this.elevatorsList[i];
+			}else if (this.elevatorsList[i].status === "idle") {
+				chosenElevator = this.elevatorsList[i];
 			}else {
 				for (let i = 0; i < this.elevatorsList.length; i++) {
                     let gap = Math.abs(this.elevatorsList[i].currentFloor - requestedFloor);
@@ -45,7 +45,7 @@ class Column {
 	requestElevator(requestedFloor, direction) {
 
 		console.log("Called an elevator to the floor " + requestedFloor);
-		
+
 		let elevator = this.findElevator(requestedFloor, direction);
 
 		elevator.addToQueue(requestedFloor);
@@ -61,7 +61,7 @@ class Column {
     }
 }
 
-class Elevator { 
+class Elevator {
 	constructor(currentFloor, floors) {
 
 		this.direction = null;
@@ -69,11 +69,11 @@ class Elevator {
 		this.currentFloor = currentFloor;
 		this.status = "idle";
 		this.queue = [];
-		this.internalButtonList = [];
+		this.internalButtonsList = [];
 		this.door = "closed";
 
 		for (let i = 0; i < this.floors; i++) {
-            this.internalButtonList.push(new InternalButton(i, false));
+            this.internalButtonsList.push(new InternalButton(i, false));
         }
     }
 	addToQueue(requestedFloor) {
@@ -93,12 +93,12 @@ class Elevator {
 		while (this.queue.length > 0) {
 
             let firstElement = this.queue[0];
-            
-			if (this.door == "open") {
+
+			if (this.door === "open") {
 				console.log("Waiting 7 seconds for the doorway to be cleared");
 				this.closeDoors();
             }
-			if (firstElement == this.currentFloor) {
+			if (firstElement === this.currentFloor) {
 				this.queue.shift();
 				this.openDoors();
 			}
@@ -134,7 +134,7 @@ class Elevator {
 			this.door = "open"
 			console.log("<> Opened doors");
 	}
-	
+
 	closeDoors() {
 			this.door="closed"
 			console.log(">< Closed doors");
@@ -143,24 +143,22 @@ class Elevator {
 }
 
 class ExternalButton {
-	constructor(requestFloor, direction, buttonPushed) {
+	constructor(requestFloor, direction) {
 		this.requestFloor = requestFloor;
 		this.direction = direction;
-		this.pushed = buttonPushed;
 	}
 }
 
 class InternalButton {
-	constructor(floor, buttonPushed) {
+	constructor(floor) {
 		this.floor = floor;
-		this.buttonPushed = buttonPushed;
 	}
 }
 
 console.log("--------------------------------------- TEST #1 ------------------------------------------------------\n\n")
 
 function Test1_requestElevator() {
-	
+
 	column1 = new Column(10, 2);
 
 	column1.elevatorsList[0].currentFloor = 2
