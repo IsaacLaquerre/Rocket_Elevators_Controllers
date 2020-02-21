@@ -1,7 +1,7 @@
 # Rocket_Elevators_Controllers - CodeBoxx Odyssey project
 
 
-Remove the "//" (JavaScript) or "#" (Python) sign in front of `Test1_requestElevator()`, `Test2_requestFloor()` and both console logs for a simulation with detailed console logs
+Remove the "//" (for JavaScript) or "#" (for Python) sign in front of `Test1_requestElevator()`, `Test2_requestFloor()` and both console logs for a simulation with detailed console logs
 
 Elevators' attributes can also be redefined inside the source code;
 
