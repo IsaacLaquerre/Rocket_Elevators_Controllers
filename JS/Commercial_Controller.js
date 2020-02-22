@@ -12,11 +12,9 @@ class Battery {
     decideColumn(requestedFloor) {
         let floorsPerColumn = Math.round(this.floors / this.columns);
         for (let index = 0; index < this.columnsList.length; index++) {
-            for (let i = 0; i < this.columnsList[index].elevatorsList.length; i++) {
-                if (requestedFloor > ((floorsPerColumn * index) - floorsPerColumn) && requestedFloor < ((floorsPerColumn * index) + floorsPerColumn)) {
-                    console.log("Chosen column #" + (index + 1));
-                    return index;
-                }
+            if (requestedFloor > ((floorsPerColumn * index) - floorsPerColumn) && requestedFloor < ((floorsPerColumn * index) + floorsPerColumn)) {
+                console.log("Chosen column #" + (index + 1));
+                return index;
             }
         }
     }

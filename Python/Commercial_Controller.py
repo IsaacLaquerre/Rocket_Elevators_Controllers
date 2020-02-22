@@ -10,21 +10,22 @@ class Battery():
 
     def decideColumn(self, requestedFloor):
         floorsPerColumn = round(self.floors / self.columns)
-        for index in len(self.columnsList):
-            for i in len(self.columnsList[index].elevatorsList):
-                if requestedFloor > ((floorsPerColumn * index) - floorsPerColumn) and requestedFloor < ((floorsPerColumn * index) + floorsPerColumn):
-                    print("Chosen column #" + str(index + 1))
-                    return index
+        index = 0
+        for column in self.columnsList:
+            if requestedFloor > ((floorsPerColumn * index) - floorsPerColumn) and requestedFloor < ((floorsPerColumn * index) + floorsPerColumn):
+                print("Chosen column #" + str(index + 1))
+                index += 1
+                return (index - 1)
 
-    def findElevator(self, requestedFloor, directon, column):
+    def findElevator(self, requestedFloor, direction, column):
         column -= 1
 
         chosenElevator = None
         bestGap = self.floors
 
-        for elevator in self.elevatorsList:
+        for elevator in self.columnsList[column].elevatorsList:
             if elevator.direction == "up" and direction == "up" and requestedFloor > elevator.currentFloor:
-                for i in len(self.columnsList[column].elevatorsList):
+                for elevator in len(self.columnsList[column].elevatorsList):
                     if elevator.direction != "up":
                         continue
                     gap = abs(elevator.currentFloor - requestedFloor)
@@ -32,7 +33,7 @@ class Battery():
                         chosenElevator = elevator
                         bestGap = gap
             elif elevator.direction == "down" and direction == "down" and requestedFloor < elevator.currentFloor:
-                for i in len(self.columnsList[column].elevatorsList):
+                for elevator in len(self.columnsList[column].elevatorsList):
                     if elevator.direction != "down":
                         continue
                     gap = abs(elevator.currentFloor - requestedFloor)
@@ -42,12 +43,12 @@ class Battery():
             elif elevator.status == "idle":
                 chosenElevator = elevator
             else:
-                for i in len(self.columnsList[column].elevatorsList):
+                for elevator in self.columnsList[column].elevatorsList:
                     gap = abs(elevator.currentFloor - requestedFloor)
                     if gap < bestGap:
                         chosenElevator = elevator
                         bestGap = gap
-            print("Best elevator found on floor " + elevator.currentFloor)
+            print("Best elevator found on floor " + str(elevator.currentFloor))
             return chosenElevator
 
     def requestElevator(self, requestedFloor, direction):
@@ -226,7 +227,7 @@ def Test1_requestElevator():
     battery1.columnsList[1].elevatorsList[3].status = "moving"
     battery1.columnsList[1].elevatorsList[3].queue = [-3,2,7,8]
 
-    battery1.requestElevator(99, "down")
+    battery1.requestElevator(9, "down")
 
 #Test1_requestElevator()
 

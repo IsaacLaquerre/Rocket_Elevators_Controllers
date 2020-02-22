@@ -74,7 +74,7 @@ class Elevator {
 		this.door = "closed";
 
 		for (let i = 0; i < this.floors; i++) {
-            this.internalButtonsList.push(new InternalButton(i, false));
+            this.internalButtonsList.push(new InternalButton(i));
         }
     }
 	addToQueue(requestedFloor) {
@@ -149,7 +149,7 @@ class ExternalButton {
 }
 
 class InternalButton {
-	constructor(floor) {
+	constructor(floor, button) {
 		this.floor = floor;
 	}
 }
