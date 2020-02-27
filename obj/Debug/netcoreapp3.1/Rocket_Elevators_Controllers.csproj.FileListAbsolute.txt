@@ -1,3 +1,0 @@
-C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\obj\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.csprojAssemblyReference.cache
-C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\obj\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.AssemblyInfoInputs.cache
-C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\obj\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.AssemblyInfo.cs
