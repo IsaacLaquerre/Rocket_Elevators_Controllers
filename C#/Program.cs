@@ -46,7 +46,6 @@ namespace Rocket_Elevators_Controllers
                         for (int ind = 0; ind < this.columnsList[column].elevatorsList.Count; ind++) {
                             if (this.columnsList[column].elevatorsList[ind].direction != "up") continue;
                             int gap = Math.Abs(this.columnsList[column].elevatorsList[ind].currentFloor - requestedFloor);
-                            Console.WriteLine(gap);
                             if (gap < bestGap) {
                                 chosenElevator = this.columnsList[column].elevatorsList[ind];
                                 bestGap = gap;
@@ -56,7 +55,6 @@ namespace Rocket_Elevators_Controllers
                         for (int ind = 0; ind < this.columnsList[column].elevatorsList.Count; ind++) {
                             if (this.columnsList[column].elevatorsList[ind].direction != "down") continue;
                             int gap = Math.Abs(this.columnsList[column].elevatorsList[ind].currentFloor - requestedFloor);
-                            Console.WriteLine(gap);
                             if (gap < bestGap) {
                             chosenElevator = this.columnsList[column].elevatorsList[ind];
                                 bestGap = gap;
