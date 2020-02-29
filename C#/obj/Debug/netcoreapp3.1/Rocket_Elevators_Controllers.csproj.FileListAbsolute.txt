@@ -1,0 +1,11 @@
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\C#\obj\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.csprojAssemblyReference.cache
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\C#\obj\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.AssemblyInfoInputs.cache
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\C#\obj\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.AssemblyInfo.cs
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\c#\bin\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.exe
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\c#\bin\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.deps.json
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\c#\bin\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.runtimeconfig.json
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\c#\bin\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.runtimeconfig.dev.json
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\c#\bin\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.dll
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\c#\bin\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.pdb
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\c#\obj\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.dll
+C:\Users\isaac\Documents\GitHub\Rocket_Elevators_Controllers\c#\obj\Debug\netcoreapp3.1\Rocket_Elevators_Controllers.pdb
